@@ -70,9 +70,9 @@ jobs:
 
       - name: Prepare for segfault
         run: |
-          echo '/tmp/core-%e.%p' > /proc/sys/kernel/core_pattern
-          echo 0 > /proc/sys/kernel/core_uses_pid
-          ulimit -c unlimited
+          sudo echo '/tmp/core-%e.%p' > /proc/sys/kernel/core_pattern
+          sudo echo 0 > /proc/sys/kernel/core_uses_pid
+          sudo ulimit -c unlimited
 
       - name: Run tests
         run: vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || gdb -batch -ex "bt" $(which php) /tmp/core-php*
