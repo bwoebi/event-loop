@@ -72,7 +72,7 @@ jobs:
         run: |
           sudo sh -c "echo '/tmp/core-%e.%p' > /proc/sys/kernel/core_pattern"
           sudo sh -c "echo 0 > /proc/sys/kernel/core_uses_pid"
-          sudo ulimit -c unlimited
+          sudo sh -c "ulimit -c unlimited"
 
       - name: Run tests
         run: USE_ZEND_ALLOC=0 vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || gdb -batch -ex "bt" $(which php) /tmp/core-php*
