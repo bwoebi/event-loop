@@ -67,6 +67,9 @@ jobs:
             composer update --optimize-autoloader --no-interaction --no-progress ${{ matrix.composer-flags }}
             composer info -D
 
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+
       - name: Run tests
         run: vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug
 
