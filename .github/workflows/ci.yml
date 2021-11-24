@@ -75,7 +75,7 @@ jobs:
           sudo sh -c "ulimit -c unlimited"
 
       - name: Run tests
-        run: USE_ZEND_ALLOC=0 vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || gdb -batch -ex "bt" $(which php) /tmp/core-php*
+        run: USE_ZEND_ALLOC=0 vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || (ls /tmp; gdb -batch -ex "bt" $(which php) /tmp/core-php*)
 
       - name: Run Psalm
         run: vendor/bin/psalm.phar --show-info=true
