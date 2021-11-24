@@ -70,12 +70,12 @@ jobs:
 
       - name: Prepare for segfault
         run: |
-          sudo echo '/tmp/core-%e.%p' > /proc/sys/kernel/core_pattern
-          sudo echo 0 > /proc/sys/kernel/core_uses_pid
+          sudo sh -c "echo '/tmp/core-%e.%p' > /proc/sys/kernel/core_pattern"
+          sudo sh -c "echo 0 > /proc/sys/kernel/core_uses_pid"
           sudo ulimit -c unlimited
 
       - name: Run tests
-        run: vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || gdb -batch -ex "bt" $(which php) /tmp/core-php*
+        run: USE_ZEND_ALLOC=0 vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || gdb -batch -ex "bt" $(which php) /tmp/core-php*
 
       - name: Run Psalm
         run: vendor/bin/psalm.phar --show-info=true
