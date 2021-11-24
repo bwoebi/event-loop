@@ -6,7 +6,7 @@ on:
 
 jobs:
   tests:
-    timeout-minutes: 15
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
@@ -40,7 +40,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: fiber-amphp/ext-fiber@master, uv-amphp/ext-uv@master, ev-beta, event
+          extensions: fiber-amphp/ext-fiber@master, uv-amphp/ext-uv@master, ev-beta, event, :xdebug
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -66,9 +66,6 @@ jobs:
           command: |
             composer update --optimize-autoloader --no-interaction --no-progress ${{ matrix.composer-flags }}
             composer info -D
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
 
       - name: Run tests
         run: vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug
