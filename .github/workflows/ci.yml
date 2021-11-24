@@ -75,7 +75,7 @@ jobs:
           sudo sh -c "ulimit -c unlimited"
 
       - name: Run tests
-        run: USE_ZEND_ALLOC=0 vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || (ls /tmp; gdb -batch -ex "bt" $(which php) /tmp/core-php*)
+        run: USE_ZEND_ALLOC=0 valgrind --track-origins=yes --keep-stacktraces=alloc-and-free vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || (ls /tmp; gdb -batch -ex "bt" $(which php) /tmp/core-php*)
 
       - name: Run Psalm
         run: vendor/bin/psalm.phar --show-info=true
