@@ -65,6 +65,7 @@ jobs:
           retry_wait_seconds: 30
           command: |
             composer update --optimize-autoloader --no-interaction --no-progress ${{ matrix.composer-flags }}
+            php -v
             composer info -D
 
       - name: Run tests
