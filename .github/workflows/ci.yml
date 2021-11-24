@@ -68,14 +68,8 @@ jobs:
             php -v
             composer info -D
 
-      - name: Prepare for segfault
-        run: |
-          sudo sh -c "echo '/tmp/core-%e.%p' > /proc/sys/kernel/core_pattern"
-          sudo sh -c "echo 0 > /proc/sys/kernel/core_uses_pid"
-          sudo sh -c "ulimit -c unlimited"
-
       - name: Run tests
-        run: USE_ZEND_ALLOC=0 MALLOC_CHECK_=3 valgrind --track-origins=yes --keep-stacktraces=alloc-and-free vendor/bin/phpunit ${{ matrix.phpunit-flags }} --debug || (ls /tmp; gdb -batch -ex "bt" $(which php) /tmp/core-php*)
+        run: USE_ZEND_ALLOC=0 vendor/bin/phpunit ${{ matrix.phpunit-flags }}
 
       - name: Run Psalm
         run: vendor/bin/psalm.phar --show-info=true
