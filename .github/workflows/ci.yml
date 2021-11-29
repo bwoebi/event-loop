@@ -40,7 +40,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: none, stream, fiber-amphp/ext-fiber@master, uv-amphp/ext-uv@master, ev-beta, :xdebug
+          extensions: none, stream, phar, fiber-amphp/ext-fiber@master, uv-amphp/ext-uv@master, ev-beta, :xdebug
 
       - name: Get Composer cache directory
         id: composer-cache
