@@ -69,7 +69,7 @@ jobs:
             composer info -D
 
       - name: Run tests
-        run: USE_ZEND_ALLOC=0 vendor/bin/phpunit ${{ matrix.phpunit-flags }}
+        run: USE_ZEND_ALLOC=0 php -dfiber.stack_size=8M vendor/bin/phpunit ${{ matrix.phpunit-flags }}
 
       - name: Run Psalm
         run: vendor/bin/psalm.phar --show-info=true
